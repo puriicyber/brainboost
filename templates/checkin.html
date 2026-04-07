@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Check-in</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/journal">Journal</a>
+        <a href="/search">Search</a>
+        <a href="/checkin">Check-in</a>
+        <a href="/gratitude">Gratitude</a>
+    </nav>
+    <h1>Habits 💪</h1>
+
+    <div class="checkin-box">
+        <h2>Add a Habit</h2>
+        <form method="POST">
+            <input type="hidden" name="action" value="add_habit">
+            <input type="text" name="habit_emoji" placeholder="Emoji e.g. 📚" style="width:70px; display:inline-block">
+            <input type="text" name="habit_name" placeholder="Habit name e.g. Read a book" style="display:inline-block; width:calc(100% - 160px)">
+            <button type="submit">Add</button>
+        </form>
+    </div>
+
+    <div class="checkin-box">
+        <h2>Your Habits</h2>
+        {% for habit in habits %}
+        <p class="checkin-item">{{ habit.emoji }} {{ habit.name }}</p>
+        {% endfor %}
+    </div>
+
+    {% if history %}
+    <h2>History 📅</h2>
+    {% for date, done_habits in history.items() %}
+    <div class="entry">
+        <p class="entry-date">{{ date }}</p>
+        {% if done_habits %}
+            {% for h in done_habits %}
+                <p>{{ h }}</p>
+            {% endfor %}
+        {% else %}
+            <p style="color:#ccc">Nothing logged</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</body>
+</html>

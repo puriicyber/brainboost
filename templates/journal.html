@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Journal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/journal">Journal</a>
+        <a href="/search">Search</a>
+        <a href="/checkin">Check-in</a>
+        <a href="/gratitude">Gratitude</a>
+    </nav>
+    <h1>My Journal 📔</h1>
+    <form method="POST">
+    <textarea name="content" rows="5" placeholder="Write your thoughts..."></textarea>
+    <br>
+    <div class="mood-selector">
+        <p>How are you feeling?</p>
+        <label><input type="radio" name="mood" value="1"> 😞 Bad</label>
+        <label><input type="radio" name="mood" value="2"> 😕 Not great</label>
+        <label><input type="radio" name="mood" value="3" checked> 😐 Okay</label>
+        <label><input type="radio" name="mood" value="4"> 🙂 Good</label>
+        <label><input type="radio" name="mood" value="5"> 😁 Gay</label>
+    </div>
+    <input type="text" name="tags" placeholder="Tags e.g. grateful, productive, anxious">
+    <br>
+    <button type="submit">Save Entry</button>
+</form>
+    <br>
+    <h2>Past Entries</h2>
+    {% for entry in entries %}
+        <div class="entry">
+            <p class="entry-date">{{ entry.date.strftime('%Y-%m-%d %H:%M') }} · 
+                {% if entry.mood == 1 %}😞
+                {% elif entry.mood == 2 %}😕
+                {% elif entry.mood == 3 %}😐
+                {% elif entry.mood == 4 %}🙂
+                {% elif entry.mood == 5 %}😁
+                {% endif %}
+            </p>
+            <p>{{ entry.content }}</p>
+            {% if entry.tags %}
+                <p class="entry-tags">🏷️ {{ entry.tags }}</p>
+            {% endif %}
+            <a href="/edit/{{ entry.id }}"><button class="edit-btn">Edit ✏️</button></a>
+            <a href="/delete/{{ entry.id }}"><button class="delete-btn">Delete 🗑️</button></a>
+        </div>
+    {% endfor %}
+</body>
+</html>

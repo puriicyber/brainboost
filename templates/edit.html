@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Edit Entry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/journal">Journal</a>
+        
+    </nav>
+    <h1>Edit Entry ✏️</h1>
+    <form method="POST">
+        <textarea name="content" rows="5">{{ entry.content }}</textarea>
+        <br>
+        <button type="submit">Update Entry</button>
+        <a href="/journal"><button type="button" class="delete-btn">Cancel</button></a>
+    </form>
+</body>
+</html>

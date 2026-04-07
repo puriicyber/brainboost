@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/journal">Journal</a>
+        <a href="/search">Search</a>
+        <a href="/gratitude">Gratitude</a>
+    </nav>
+    <h1>Search 🔍</h1>
+    <form method="GET">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search entries or tags...">
+        <button type="submit">Search</button>
+    </form>
+    {% if query %}
+        <h2>Results for "{{ query }}"</h2>
+        {% if results %}
+            {% for entry in results %}
+                <div class="entry">
+                    <p class="entry-date">{{ entry.date.strftime('%Y-%m-%d %H:%M') }} ·
+                        {% if entry.mood == 1 %}😞
+                        {% elif entry.mood == 2 %}😕
+                        {% elif entry.mood == 3 %}😐
+                        {% elif entry.mood == 4 %}🙂
+                        {% elif entry.mood == 5 %}😁
+                        {% endif %}
+                    </p>
+                    <p>{{ entry.content }}</p>
+                    {% if entry.tags %}
+                        <p class="entry-tags">🏷️ {{ entry.tags }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No entries found for "{{ query }}"</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

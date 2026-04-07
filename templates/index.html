@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/journal">Journal</a>
+        <a href="/search">Search</a>
+        <a href="/checkin">Check-in</a>
+        <a href="/gratitude">Gratitude</a>
+    </nav>
+
+    <div class="streak-box">
+        <p>🔥 {{ streak }} day streak!</p>
+    </div>
+
+    <div class="quote-box">
+        <p>✨ {{ quote }}</p>
+    </div>
+
+    <div class="checkin-box">
+        <h2>Today's Habits 💪</h2>
+        {% if unchecked %}
+            {% for habit in unchecked %}
+            <form method="POST" action="/quick_checkin/{{ habit.id }}">
+                <button class="habit-btn">{{ habit.emoji }} {{ habit.name }}</button>
+            </form>
+            {% endfor %}
+        {% endif %}
+        {% if checked %}
+            {% for habit in checked %}
+            <p class="habit-done">✅ {{ habit.emoji }} {{ habit.name }}</p>
+            {% endfor %}
+        {% endif %}
+        {% if not unchecked and not checked %}
+            <p>No habits yet! <a href="/checkin">Add some</a></p>
+        {% endif %}
+        {% if unchecked == [] and checked %}
+            <p class="all-done">🎉 All done for today!</p>
+        {% endif %}
+    </div>
+
+    <a href="/journal"><button>Open Journal</button></a>
+</body>
+</html>

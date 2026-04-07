@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Gratitude Wall</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/journal">Journal</a>
+        <a href="/search">Search</a>
+        <a href="/checkin">Check-in</a>
+        <a href="/gratitude">Gratitude</a>
+    </nav>
+    <h1>Gratitude Wall 🙏</h1>
+    <div class="checkin-box">
+        <form method="POST">
+            <input type="text" name="content" placeholder="I am grateful for...">
+            <button type="submit">Add 🙏</button>
+        </form>
+    </div>
+    <div class="gratitude-wall">
+        {% for item in items %}
+        <div class="gratitude-card">
+            <p>🙏 {{ item.content }}</p>
+            <span class="entry-date">{{ item.date.strftime('%Y-%m-%d') }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
