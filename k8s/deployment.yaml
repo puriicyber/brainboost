@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: brainboost
-        image: puriicyber/brainboost:latest
+        image: puriicyber/brainboost:66c7c86b2d4414f9050f50ca1f366323249acc0c
         ports:
         - containerPort: 5000
 ---
